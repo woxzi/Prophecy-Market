@@ -6,6 +6,5 @@ namespace Basic_Prophecy_Market
 {
     class UpgradeProphecy : Prophecy
     {
-        public string name { get; set; }
     }
 }

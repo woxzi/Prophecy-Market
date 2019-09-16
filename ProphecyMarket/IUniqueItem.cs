@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Basic_Prophecy_Market
 {
-    interface UniqueItem
+    interface IUniqueItem : IItem
     {
-        string name { get; set; }
+        new string type { get; set; }
     }
 }

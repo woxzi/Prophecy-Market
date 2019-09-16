@@ -6,8 +6,8 @@ namespace Basic_Prophecy_Market
 {
     class ProphecyGroup
     {
-        UpgradeProphecy prophecy;
-        BaseUnique baseItem;
-        ResultUnique resultItem;
+        UpgradeProphecy prophecy { get; set; }
+        BaseUnique baseItem { get; set; }
+        ResultUnique resultItem { get; set; }
     }
 }

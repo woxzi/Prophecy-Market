@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Basic_Prophecy_Market
 {
-    interface Item
+    interface IItem
     {
         string name { get; set; }
-        string baseType { get; set; }
+        string type { get; }
 
         //set up stats here
     }

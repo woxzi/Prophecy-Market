@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Basic_Prophecy_Market
 {
-    interface Prophecy
+    class Prophecy : Item
     {
-        string name { get; set; }
+        public string type { get { return "Prophecy"; } }
+        public string name { get; set; }
     }
 }
