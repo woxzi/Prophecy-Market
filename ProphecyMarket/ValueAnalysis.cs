@@ -46,6 +46,10 @@ namespace Basic_Prophecy_Market
             resultCost = r.Result;
             prophecyCost = p.Result;
 
+            //calc values
+            totalCost = baseCost + prophecyCost;
+            profit = resultCost - totalCost;
+
 #else
             try
             {
@@ -54,15 +58,17 @@ namespace Basic_Prophecy_Market
                 resultCost = ApiHandler.GetValueOf(prophecy.resultItem, Program.currentLeague);
                 Console.Write(".");
                 prophecyCost = ApiHandler.GetValueOf(prophecy, Program.currentLeague);
-            }catch(Exception e)
+
+                //calc values
+                totalCost = baseCost + prophecyCost;
+                profit = resultCost - totalCost;
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
 
-            #endif
-            //calc values
-            totalCost = baseCost + prophecyCost;
-            profit = resultCost - totalCost;
+#endif
 
 
             Console.WriteLine(" Done.");
