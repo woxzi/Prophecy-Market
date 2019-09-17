@@ -2,17 +2,17 @@
 using Newtonsoft.Json;
 using RestSharp;
 using System;
+using System.Threading.Tasks;
 
 namespace Basic_Prophecy_Market.Net
 {
     class ApiHandler
     {
-        private static readonly int samplesize = 1;
-
         //returns item value in chaos orbs
         public static double GetValueOf(IItem item, string league)
         {
             bool debug = false;
+            int samplesize = System.Convert.ToInt32(Properties.Resources.SampleSize);
 
             var client = RestFactory.GetClient();
             var request = RestFactory.GetSearchRequest(item, league);
@@ -29,8 +29,8 @@ namespace Basic_Prophecy_Market.Net
 
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
-                Console.WriteLine($"Could not retrieve listings for {item.name}");
-                Console.WriteLine(response.Content);
+                string s = $" Failed.\nCould not retrieve listings for {item.name}\n{response.Content}";
+                throw new Exception(s);
             }
             else
             {
@@ -66,7 +66,9 @@ namespace Basic_Prophecy_Market.Net
         }
         //find the value in chaos orbs of the given currency
         public static double FindChaosValue(string currencyType, double amount, string league)
-        { 
+        {
+
+            int samplesize = System.Convert.ToInt32(Properties.Resources.SampleSize);
 
             var client = RestFactory.GetClient();
             var request = RestFactory.GetExchangeRequest(new Currency { Type = currencyType }, new Currency { Type = "chaos" }, league);
@@ -77,15 +79,24 @@ namespace Basic_Prophecy_Market.Net
 
             //average most recent exchange listings
             double totalCost = 0;
-
+            int offset = 0;
             for (int i = 0; i < samplesize; i++)
             {
-                var req = RestFactory.GetListingRequest(result.result[i], result.id);
-                var resp = client.Execute(req);
+                //if result is null, skip it/
+                if (result != null)
+                {
+                    var req = RestFactory.GetListingRequest(result.result[i + offset], result.id);
+                    var resp = client.Execute(req);
 
-                dynamic listing = JsonConvert.DeserializeObject(resp.Content);
-                double test = listing.result[0].listing.price.amount;
-                totalCost = test;
+                    dynamic listing = JsonConvert.DeserializeObject(resp.Content);
+                    double test = listing.result[0].listing.price.amount;
+                    totalCost = test;
+                }
+                else
+                {
+                    offset++;
+                    i--;
+                }
             }
 
 

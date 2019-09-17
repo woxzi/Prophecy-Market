@@ -52,8 +52,7 @@ namespace Basic_Prophecy_Market.Net
             {
                 option = "online"
             },
-            item.name,
-            item.type
+            item.name
         };
 
         public object query;
