@@ -7,6 +7,8 @@ namespace Basic_Prophecy_Market.Net
 {
     class ApiHandler
     {
+        private static readonly int samplesize = 1;
+
         //returns item value in chaos orbs
         public static double GetValueOf(IItem item, string league)
         {
@@ -36,10 +38,9 @@ namespace Basic_Prophecy_Market.Net
                 SearchResult result = JsonConvert.DeserializeObject<SearchResult>(response.Content);
 
                 double total = 0;
-                int size = 5;
 
-                //check the lowest five result values
-                for (int i = 0; i < size; i++)
+                //check the lowest result values
+                for (int i = 0; i < samplesize; i++)
                 {
                     var req = RestFactory.GetListingRequest(result.result[i], result.id);
                     var resp = client.Execute(req);
@@ -58,14 +59,15 @@ namespace Basic_Prophecy_Market.Net
                         total += FindChaosValue(currency, amount, league);
                     }
                 }
-                return total / 5;
+                return total / samplesize;
             }
 
             return -1;
         }
         //find the value in chaos orbs of the given currency
         public static double FindChaosValue(string currencyType, double amount, string league)
-        {
+        { 
+
             var client = RestFactory.GetClient();
             var request = RestFactory.GetExchangeRequest(new Currency { Type = currencyType }, new Currency { Type = "chaos" }, league);
             var response = client.Execute<SearchResult>(request);
@@ -73,10 +75,10 @@ namespace Basic_Prophecy_Market.Net
             //convert response to searchresult object for use in logic
             SearchResult result = JsonConvert.DeserializeObject<SearchResult>(response.Content);
 
-            //average most recent 3 exchange listings
+            //average most recent exchange listings
             double totalCost = 0;
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < samplesize; i++)
             {
                 var req = RestFactory.GetListingRequest(result.result[i], result.id);
                 var resp = client.Execute(req);
@@ -87,7 +89,7 @@ namespace Basic_Prophecy_Market.Net
             }
 
 
-            return amount * totalCost / 3;
+            return amount * totalCost / samplesize;
         }
     }
 }
