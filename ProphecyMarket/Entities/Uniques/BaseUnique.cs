@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Basic_Prophecy_Market
 {
-    class UpgradeProphecy : Prophecy
+    class BaseUnique : UniqueItem
     {
     }
 }

@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Basic_Prophecy_Market
 {
-    class ResultUnique : UniqueItem
+    class UniqueItem : IItem
     {
         public string name { get; set; }
+        public string type { get; set; }
     }
 }

@@ -8,81 +8,53 @@ namespace Basic_Prophecy_Market
 {
     class Program
     {
+        public static string currentLeague = "Blight";
         static void Main(string[] args)
         {
-            string currentLeague = "Blight";
+            List<ValueAnalysis> list = InitUpgrades();
 
-            Prophecy test = new Prophecy
+            foreach(ValueAnalysis v in list)
             {
-                name = "The Wealthy Exile"
-            };
-
-            BaseUnique test2 = new BaseUnique
-            {
-                name = "Kaom's Sign"
-            };
-
-            ResultUnique test3 = new ResultUnique
-            {
-                name = "Kaom's Way"
-            };
-
-            double value = ApiHandler.GetValueOf(test, currentLeague);
-
-            Console.WriteLine($"The value of {test.name} is {value}");
-
-            //GetLeagues();
-            /*
-            var client = new RestClient("https://webhook.site/95e441e9-7d82-46b0-aaf2-a71919877bab/");
-            var request = new RestRequest("post", Method.POST);
-            request.AddHeader("Content-type", "application/json");
-            request.AddParameter("application/json", JsonConvert.SerializeObject(test), ParameterType.RequestBody);
-            //request.AddJsonBody(test);
-            var response = client.Execute(request);
-
-            Console.WriteLine("===============DEBUG================");
-            Console.WriteLine(response.ResponseUri);
-            Console.WriteLine("Params: ");
-            foreach (var p in request.Parameters)
-            {
-                Console.WriteLine($"\t{p.Name}: {p.Value}");
+                v.Update();
+                Console.WriteLine(v);
             }
-            Console.WriteLine("Resource: " + request.Resource);
-            Console.WriteLine("====================================");
-            Console.WriteLine("Status Code: " + response.StatusCode);
-            Console.WriteLine("Headers: ");
-            foreach (var h in response.Headers)
-            {
-                Console.WriteLine($"\t{h.Name}: {h.Value}");
-            }
-            Console.WriteLine(response.Content);
-            Console.WriteLine("====================================");
-            */
         }
 
-        static List<ProphecyGroup> InitProphecyGroups()
+        //intitializes the list of prophecies, without market data
+        static List<ValueAnalysis> InitUpgrades()
         {
-            return null;
-        }
+            List<ValueAnalysis> list = new List<ValueAnalysis>();
 
-        static void GetLeagues()
-        {
-            var client = RestFactory.GetClient();
-            var request = new RestRequest("search/Blight", Method.POST);
-
-            Prophecy test = new Prophecy
+            #region King's Path
+            BaseUnique baseItem = new BaseUnique
             {
-                name = "The King's Path"
+                name = "Kaom's Sign",
+                type = "Coral Ring"
             };
 
-            string query = new SearchRequest(test).ToString();
-            Console.WriteLine("Query: " + query);
+            ResultUnique resultItem = new ResultUnique
+            {
+                name = "Kaom's Way",
+                type = "Coral Ring"
+            };
 
-            request.AddParameter("application/json", query, ParameterType.RequestBody);
-            var response = client.Execute(request);
+            UpgradeProphecy prophecy = new UpgradeProphecy
+            {
+                name = "The King's Path",
+                baseItem = baseItem,
+                resultItem = resultItem
+            };
 
-            Console.WriteLine("Response: "+response.Content);
+            list.Add(new ValueAnalysis
+            {
+                prophecy = prophecy,
+                totalCost = 0,
+                profit = 0
+            });
+            #endregion
 
+            return list;
         }
+
     }
 }

@@ -9,6 +9,6 @@ namespace Basic_Prophecy_Market
         string name { get; set; }
         string type { get; }
 
-        //set up stats here
+        //set up stats here if needed
     }
 }

@@ -1,0 +1,12 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Basic_Prophecy_Market
+{
+    class UpgradeProphecy : Prophecy
+    {
+        public BaseUnique baseItem { get; set; }
+        public ResultUnique resultItem { get; set; }
+    }
+}

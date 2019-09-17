@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 using RestSharp;
+using Basic_Prophecy_Market.Entities;
 namespace Basic_Prophecy_Market.Net
 {
     class RestFactory
@@ -17,11 +17,21 @@ namespace Basic_Prophecy_Market.Net
         }
 
         //Returns a post request for a given item
-        public static RestRequest GetSearchRequest(Item item, string league)
+        public static RestRequest GetSearchRequest(IItem item, string league)
         {
             var request = new RestRequest($"search/{league}", Method.POST);
             request.AddParameter("application/json; charset=utf-8", JsonConvert.SerializeObject(new SearchRequest(item)), ParameterType.RequestBody);
             //request.AddJsonBody(new SearchRequest(item));
+            return request;
+        }
+
+        //Returns a post request for a given item
+        public static RestRequest GetExchangeRequest(Currency have, Currency want, string league)
+        {
+            var request = new RestRequest($"exchange/{league}", Method.POST);
+            string[] h = { have.Type };
+            string[] w = { want.Type };
+            request.AddParameter("application/json; charset=utf-8", JsonConvert.SerializeObject(new CurrencySearchRequest(h, w)), ParameterType.RequestBody);
             return request;
         }
 
@@ -36,7 +46,7 @@ namespace Basic_Prophecy_Market.Net
     {
 
         //create a variable type object for query, prep for serialization
-        public SearchRequest(Item item) => query = new
+        public SearchRequest(IItem item) => query = new
         {
             status = new
             {
@@ -54,6 +64,26 @@ namespace Basic_Prophecy_Market.Net
         };
 
         //returns a json string to use as a poe trade api request
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
+    }
+
+    class CurrencySearchRequest
+    {
+        public CurrencySearchRequest(string[] have, string[] want) => exchange = new
+        {
+            status = new
+            {
+                option = "online"
+            },
+            have = have,
+            want = want
+        };
+        public object exchange;
+
+        //returns a json string to use as a poe exchange api request
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
