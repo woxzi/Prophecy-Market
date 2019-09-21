@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Basic_Prophecy_Market.Market;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -7,9 +8,9 @@ namespace Basic_Prophecy_Market
 {
     class DataReader
     {
-        public static List<ValueAnalysis> GetUpgrades()
+        public static List<ProphecyValueAnalysis> GetUpgrades()
         {
-            List<ValueAnalysis> list = new List<ValueAnalysis>();
+            List<ProphecyValueAnalysis> list = new List<ProphecyValueAnalysis>();
 
             var propcsv = Properties.Resources.ProphecyList;
 
@@ -35,10 +36,14 @@ namespace Basic_Prophecy_Market
                     baseItem = baseItem
                 };
 
-                list.Add(new ValueAnalysis(prophecy));
+                list.Add(new ProphecyValueAnalysis(prophecy));
             }
 
             return list;
+        }
+        public static List<RecipeValueAnalysis> GetRecipes()
+        {
+            throw new NotImplementedException();
         }
     }
 }

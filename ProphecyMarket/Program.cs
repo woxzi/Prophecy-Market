@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Basic_Prophecy_Market.Market;
 using Basic_Prophecy_Market.Net;
 using Newtonsoft.Json;
 using RestSharp;
@@ -12,7 +13,16 @@ namespace Basic_Prophecy_Market
         public static string currentLeague = Properties.Resources.League;
         static void Main(string[] args)
         {
-            List<ValueAnalysis> list = DataReader.GetUpgrades();
+            //create list of all registered profit strategies
+            List<ValueAnalysis> list = new List<ValueAnalysis>();
+            foreach (var v in DataReader.GetUpgrades())
+            {
+                list.Add(v);
+            }
+            foreach (var v in DataReader.GetRecipes())
+            {
+                list.Add(v);
+            }
 
             UpdateList(list);
 
@@ -20,15 +30,20 @@ namespace Basic_Prophecy_Market
 
             foreach (ValueAnalysis v in list)
             {
-                Console.WriteLine(v);
+                if (v.isUpdated)
+                {
+                    Console.WriteLine(v);
+                }
             }
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey(true);
         }
 
         static void UpdateList(List<ValueAnalysis> list)
         {
+            
             foreach (ValueAnalysis v in list)
             {
-                Console.Write($"Retrieving market values for {v.prophecy.name}.");
                 v.Update();
             }
         }

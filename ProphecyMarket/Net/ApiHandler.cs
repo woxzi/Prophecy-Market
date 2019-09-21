@@ -1,4 +1,6 @@
 ﻿using Basic_Prophecy_Market.Entities;
+using Basic_Prophecy_Market.Entities.Recipes;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -29,7 +31,7 @@ namespace Basic_Prophecy_Market.Net
 
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
-                string s = $" Failed.\nCould not retrieve listings for {item.name}\n{response.Content}";
+                string s = $"Could not retrieve listings for {item.name}\n\tStatus code: {response.StatusCode}\n{response.Content}";
                 throw new Exception(s);
             }
             else
@@ -61,8 +63,11 @@ namespace Basic_Prophecy_Market.Net
                 }
                 return total / samplesize;
             }
+        }
 
-            return -1;
+        public static double GetValueOf(IItem item, HashSet<RecipeConstraint> constraints, string league)
+        {
+            throw new NotImplementedException();
         }
         //find the value in chaos orbs of the given currency
         public static double FindChaosValue(string currencyType, double amount, string league)
@@ -71,7 +76,7 @@ namespace Basic_Prophecy_Market.Net
             int samplesize = System.Convert.ToInt32(Properties.Resources.SampleSize);
 
             var client = RestFactory.GetClient();
-            var request = RestFactory.GetExchangeRequest(new Currency { Type = currencyType }, new Currency { Type = "chaos" }, league);
+            var request = RestFactory.GetExchangeRequest(new Currency { name = currencyType }, new Currency { name = "chaos" }, league);
             var response = client.Execute<SearchResult>(request);
 
             //convert response to searchresult object for use in logic
@@ -102,5 +107,7 @@ namespace Basic_Prophecy_Market.Net
 
             return amount * totalCost / samplesize;
         }
+
+
     }
 }

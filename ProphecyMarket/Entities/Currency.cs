@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Basic_Prophecy_Market.Entities
 {
-    class Currency
+    class Currency : IItem
     {
-        public string Type { get; set; }
+        public string name { get; set; }
     }
 }

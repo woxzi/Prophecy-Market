@@ -29,8 +29,8 @@ namespace Basic_Prophecy_Market.Net
         public static RestRequest GetExchangeRequest(Currency have, Currency want, string league)
         {
             var request = new RestRequest($"exchange/{league}", Method.POST);
-            string[] h = { have.Type };
-            string[] w = { want.Type };
+            string[] h = { have.name };
+            string[] w = { want.name };
             request.AddParameter("application/json; charset=utf-8", JsonConvert.SerializeObject(new CurrencySearchRequest(h, w)), ParameterType.RequestBody);
             return request;
         }
