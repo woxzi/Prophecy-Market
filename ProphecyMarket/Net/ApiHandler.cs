@@ -10,6 +10,9 @@ namespace Basic_Prophecy_Market.Net
 {
     class ApiHandler
     {
+        //stores the value of each currency with respect to chaos
+        public static Dictionary<string, double> currencyValue = new Dictionary<string, double>();
+
         //returns item value in chaos orbs
         public static double GetValueOf(IItem item, string league)
         {
@@ -65,18 +68,26 @@ namespace Basic_Prophecy_Market.Net
             }
         }
 
-        public static double GetValueOf(IItem item, HashSet<RecipeConstraint> constraints, string league)
+        //returns item value in chaos, given specific constraints, from vendor recipes
+        public static double GetValueOf(IItem item, List<RecipeConstraint> constraints, string league)
         {
             throw new NotImplementedException();
         }
         //find the value in chaos orbs of the given currency
         public static double FindChaosValue(string currencyType, double amount, string league)
         {
+            //chaos is always equal to chaos
+            if (currencyType == "chaos") return 1;
+            //reuse old values if created during current execution
+            if (currencyValue.ContainsKey(currencyType))
+            {
+                return amount * currencyValue[currencyType];
+            }
 
             int samplesize = System.Convert.ToInt32(Properties.Resources.SampleSize);
 
             var client = RestFactory.GetClient();
-            var request = RestFactory.GetExchangeRequest(new Currency { name = currencyType }, new Currency { name = "chaos" }, league);
+            var request = RestFactory.GetExchangeRequest(new Currency { name = "chaos" }, new Currency { name = currencyType }, league);
             var response = client.Execute<SearchResult>(request);
 
             //convert response to searchresult object for use in logic
@@ -95,7 +106,7 @@ namespace Basic_Prophecy_Market.Net
 
                     dynamic listing = JsonConvert.DeserializeObject(resp.Content);
                     double test = listing.result[0].listing.price.amount;
-                    totalCost = test;
+                    totalCost += test;
                 }
                 else
                 {
@@ -103,9 +114,10 @@ namespace Basic_Prophecy_Market.Net
                     i--;
                 }
             }
+            
+            currencyValue[currencyType] = totalCost / samplesize;
 
-
-            return amount * totalCost / samplesize;
+            return amount * currencyValue[currencyType];
         }
 
 

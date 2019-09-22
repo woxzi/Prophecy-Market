@@ -19,6 +19,7 @@ namespace Basic_Prophecy_Market
             {
                 list.Add(v);
             }
+            
             foreach (var v in DataReader.GetRecipes())
             {
                 list.Add(v);
@@ -30,7 +31,7 @@ namespace Basic_Prophecy_Market
 
             foreach (ValueAnalysis v in list)
             {
-                if (v.isUpdated)
+                //if (v.isUpdated)
                 {
                     Console.WriteLine(v);
                 }
@@ -44,6 +45,7 @@ namespace Basic_Prophecy_Market
             
             foreach (ValueAnalysis v in list)
             {
+                if (v is ProphecyValueAnalysis)
                 v.Update();
             }
         }

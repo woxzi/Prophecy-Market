@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Basic_Prophecy_Market
+namespace Basic_Prophecy_Market.Market
 {
     interface ValueAnalysis
     {

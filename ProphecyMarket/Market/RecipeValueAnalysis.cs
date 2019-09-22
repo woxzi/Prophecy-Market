@@ -9,7 +9,24 @@ namespace Basic_Prophecy_Market.Market
     class RecipeValueAnalysis : ValueAnalysis
     {
         public VendorUnique result;
-        public string name { get { return result.name; } }
+        public string name
+        {
+            get
+            {
+                if (result.ResultConditions.Contains(RecipeConstraint.Shaped))
+                {
+                    return $"{result.name} (Shaped)";
+                }
+                else if (result.ResultConditions.Contains(RecipeConstraint.Elder))
+                {
+                    return $"{result.name} (Elder)";
+                }
+                else
+                {
+                    return result.name;
+                }
+            }
+        }
         public string type { get { return "Unique Vendor Recipe"; } }
         public double totalCost { get; set; }
         public double profit { get; set; }
@@ -30,7 +47,7 @@ namespace Basic_Prophecy_Market.Market
             totalCost = 0;
             try
             {
-                var ingredients = result.ingredients;
+                var ingredients = result.Ingredients;
                 foreach (var v in ingredients.Keys)
                 {
                     Console.Write(".");
@@ -56,34 +73,38 @@ namespace Basic_Prophecy_Market.Market
         }
         public override string ToString()
         {
+            #region Styling
 
-            string spacer = "  ";
+            string spc = "  ";
+            string bullet = "- ";
+
+            #endregion
 
             #region Header
 
-            string header = spacer + $"-----====< {name} >====-----\n" + spacer;
+            string header = $"{spc}-----====< {name} >====-----{spc}\n";
 
             #endregion
 
             #region Footer
 
-            string footer = spacer;
-            for (int i = 0; i < header.Length; i++)
+            string footer = spc;
+            for (int i = 0; i < header.Length - (2 * spc.Length) - 1; i++)
             {
                 footer += "-";
             }
-            footer += spacer + "\n";
+            footer += spc + '\n';
 
             #endregion
 
             #region Body
             string body =
-                $"Profit: {profit} chaos\n" +
-                $"Total Cost: {totalCost} chaos\n" +
-                $"Type: {type}\n";
+            spc + $"Profit: {profit} chaos\n" +
+            spc + $"Total Cost: {totalCost} chaos\n" +
+            spc + $"Type: {type}\n";
             foreach (var item in costs.Keys)
             {
-                body += $"\t{item.name}: {costs[item]} chaos\n";
+                body += $"{spc}{bullet}{item.name}: {costs[item]} chaos\n";
             }
             #endregion
 

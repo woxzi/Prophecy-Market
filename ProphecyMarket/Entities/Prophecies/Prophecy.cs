@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Basic_Prophecy_Market
+namespace Basic_Prophecy_Market.Entities.Prophecies
 {
     class Prophecy : IItem
     {

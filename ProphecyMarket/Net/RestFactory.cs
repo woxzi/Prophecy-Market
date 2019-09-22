@@ -3,6 +3,7 @@ using System.Text;
 using Newtonsoft.Json;
 using RestSharp;
 using Basic_Prophecy_Market.Entities;
+
 namespace Basic_Prophecy_Market.Net
 {
     class RestFactory

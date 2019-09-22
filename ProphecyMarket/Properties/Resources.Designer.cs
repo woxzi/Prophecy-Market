@@ -83,18 +83,32 @@ namespace Basic_Prophecy_Market.Properties {
         ///Burning Dread,Dreadarc,Dreadsurge
         ///Cold Blooded Fury,Bloodboil,Winter [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string ProphecyList {
+        internal static string ProphecyRecipes {
             get {
-                return ResourceManager.GetString("ProphecyList", resourceCulture);
+                return ResourceManager.GetString("ProphecyRecipes", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1.
+        ///   Looks up a localized string similar to 3.
         /// </summary>
         internal static string SampleSize {
             get {
                 return ResourceManager.GetString("SampleSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Anima Stone,,Primordial Might,,Primordial Harmony,,Primordial Eminence,,
+        ///Arborix,,Grelwood Shank,,Beltimber Blade,,Orb of Fusing,Currency,
+        ///Orb of Fusing,,Light of Lunaris,Not Corrupted,Shade of Solaris,Not Corrupted,Orb of Fusing,Currency,
+        ///Kingmaker,,Soul Taker,Not Corrupted,Heartbreaker,Not Corrupted,Orb of Fusing,Currency,
+        ///Kingmaker,&quot;Shaped, Not Corrupted&quot;,Soul Taker,&quot;Shaped, Not Corrupted&quot;,Heartbreaker,&quot;Shaped, Not Corrupted&quot;,Orb of Fusing,Currency,
+        ///Kingmaker,&quot;Elder, Not Corrupted&quot;,Soul Taker,&quot;E [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string VendorRecipes {
+            get {
+                return ResourceManager.GetString("VendorRecipes", resourceCulture);
             }
         }
     }

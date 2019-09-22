@@ -121,10 +121,13 @@
     <value>Blight</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ProphecyList" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ProphecyList.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="ProphecyRecipes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\prophecyrecipes.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="SampleSize" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
+  </data>
+  <data name="VendorRecipes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\vendorrecipes.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

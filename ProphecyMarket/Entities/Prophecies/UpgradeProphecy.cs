@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Basic_Prophecy_Market.Entities.Uniques;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Basic_Prophecy_Market
+namespace Basic_Prophecy_Market.Entities.Prophecies
 {
     class UpgradeProphecy : Prophecy
     {

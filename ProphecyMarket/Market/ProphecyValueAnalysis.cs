@@ -1,9 +1,10 @@
-﻿using Basic_Prophecy_Market.Net;
+﻿using Basic_Prophecy_Market.Entities.Prophecies;
+using Basic_Prophecy_Market.Net;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Basic_Prophecy_Market
+namespace Basic_Prophecy_Market.Market
 {
     class ProphecyValueAnalysis : ValueAnalysis
     {
@@ -51,33 +52,40 @@ namespace Basic_Prophecy_Market
                 isUpdated = false;
             }
         }
-
         public override string ToString()
         {
             #region Styling
 
-            string spacer = "  ";
+            string spc = "  ";
+            string bullet = "- ";
 
-            //do header
-            string header = spacer + $"-----====< {name} >====-----\n" + spacer;
+            #endregion
 
-            //do footer
-            string footer = spacer;
-            for (int i = 0; i < header.Length; i++)
+            #region Header
+
+            string header = $"{spc}-----====< {name} >====-----{spc}\n";
+
+            #endregion
+
+            #region Footer
+
+            string footer = spc;
+            for (int i = 0; i < header.Length - (2 * spc.Length) - 1; i++)
             {
                 footer += "-";
             }
-            footer += spacer + "\n";
+            footer += spc + '\n';
+
             #endregion
 
             #region Body
-            string body = 
-                $"Profit: {profit} chaos\n" +
-                $"Total Cost: {totalCost} chaos\n" +
-                $"Type: {type}\n";
+            string body =
+            spc + $"Profit: {profit} chaos\n" +
+            spc + $"Total Cost: {totalCost} chaos\n" +
+            spc + $"Type: {type}\n";
             foreach (var item in costs.Keys)
             {
-                body += $"\t{item.name}: {costs[item]} chaos\n";
+                body += $"{spc}{bullet}{item.name}: {costs[item]} chaos\n";
             }
             #endregion
 
