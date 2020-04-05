@@ -39,6 +39,7 @@ namespace Basic_Prophecy_Market.Net
         //Returns a get request for a given listing
         public static RestRequest GetListingRequest(string listingId, string queryId)
         {
+            //System.Console.WriteLine($"got listing request: fetch/{listingId}?query={queryId}");
             return new RestRequest($"fetch/{listingId}?query={queryId}", Method.GET);
         }
     }

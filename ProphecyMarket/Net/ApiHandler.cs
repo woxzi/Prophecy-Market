@@ -10,6 +10,8 @@ namespace Basic_Prophecy_Market.Net
 {
     class ApiHandler
     {
+        private static int callWaitMilliseconds = 500;
+
         //stores the value of each currency with respect to chaos
         public static Dictionary<string, double> currencyValue = new Dictionary<string, double>();
 
@@ -22,6 +24,7 @@ namespace Basic_Prophecy_Market.Net
             var client = RestFactory.GetClient();
             var request = RestFactory.GetSearchRequest(item, league);
             var response = client.Execute<SearchResult>(request);
+            System.Threading.Thread.Sleep(callWaitMilliseconds);
 
             //print response if debug is enabled
             if (debug)
@@ -49,7 +52,7 @@ namespace Basic_Prophecy_Market.Net
                 {
                     var req = RestFactory.GetListingRequest(result.result[i], result.id);
                     var resp = client.Execute(req);
-
+                    System.Threading.Thread.Sleep(callWaitMilliseconds);
                     dynamic listing = JsonConvert.DeserializeObject(resp.Content);
 
                     if (listing.result[0].listing.price.currency == "chaos")
@@ -89,6 +92,7 @@ namespace Basic_Prophecy_Market.Net
             var client = RestFactory.GetClient();
             var request = RestFactory.GetExchangeRequest(new Currency { name = "chaos" }, new Currency { name = currencyType }, league);
             var response = client.Execute<SearchResult>(request);
+            System.Threading.Thread.Sleep(callWaitMilliseconds);
 
             //convert response to searchresult object for use in logic
             SearchResult result = JsonConvert.DeserializeObject<SearchResult>(response.Content);
@@ -103,6 +107,7 @@ namespace Basic_Prophecy_Market.Net
                 {
                     var req = RestFactory.GetListingRequest(result.result[i + offset], result.id);
                     var resp = client.Execute(req);
+                    System.Threading.Thread.Sleep(callWaitMilliseconds);
 
                     dynamic listing = JsonConvert.DeserializeObject(resp.Content);
                     double test = listing.result[0].listing.price.amount;
