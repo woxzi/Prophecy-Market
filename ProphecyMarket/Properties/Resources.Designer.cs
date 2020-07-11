@@ -61,7 +61,7 @@ namespace Basic_Prophecy_Market.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delirium.
+        ///   Looks up a localized string similar to Harvest.
         /// </summary>
         internal static string League {
             get {
